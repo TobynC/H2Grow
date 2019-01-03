@@ -8,14 +8,17 @@
               <v-card-text>
                 <v-form ref="form">
                     <v-layout row wrap>
+                        <v-flex class="font-weight-bold subheading" error--text xs12>
+                            {{firebaseFeedback}}
+                        </v-flex>
                         <v-flex xs12>
                             <v-text-field
                                 name="email"
                                 label="Email"
                                 id="email"
-                                type="text"
-                                required
+                                type="email"                                
                                 v-model="email"
+                                :roles="emailRules"
                             ></v-text-field>
                         </v-flex>
                         <v-flex xs12>
@@ -25,7 +28,7 @@
                                 id="password"
                                 type="password"
                                 v-model="password"
-                                required
+                                :roles="passwordRules"
                             ></v-text-field>
                         </v-flex>
                         <v-btn color="primary" @click="submit">Continue</v-btn>
@@ -38,22 +41,35 @@
 </template>
 
 <script>
-    import db from '@/fb'
+    import firebase from 'firebase/app'
+    import 'firebase/firestore'
+    import validateEmailMixin from '@/mixins/validateEmailMixin.js'
 
     export default {
         data(){
             return{
                 email: '',
-                password: ''
+                password: '',
+                firebaseFeedback: '',
+                passwordRules: [
+                    v => v.length > 0 ? v.length < 50 || 'Password is too long.' : true
+                ],
+                emailRules: [
+                    v => v.length > 0 ? this.validateEmail(v) || 'Invalid email.' : true
+                ]
             }
         },
         methods: {
             submit(){
                 if(this.$refs.form.validate()){      
-                           
-                    //this.$router.push({ name: 'home' });                    
+                    firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(() => {                        
+                        this.$router.push({name: 'home'});
+                    }).catch(error => {
+                        this.firebaseFeedback = error.message;
+                    })                   
                 }
             }     
-        }
+        },
+        mixins: [validateEmailMixin]
     }
 </script>

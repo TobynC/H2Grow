@@ -15,9 +15,10 @@
             </v-toolbar-items>  
             <v-spacer></v-spacer> 
             <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn to="/Login" class="text-capitalize" flat>Login</v-btn> 
-                <v-btn to="/Register" class="text-capitalize" flat>Register</v-btn> 
-                <v-btn v-if="authenticated" to="/Account" class="text-capitalize" flat>Account</v-btn> 
+                <v-btn v-if="!user" to="/Login" class="text-capitalize" flat>Login</v-btn> 
+                <v-btn v-if="!user" to="/Register" class="text-capitalize" flat>Register</v-btn> 
+                <v-btn v-if="user" to="/Account" class="text-lowercase" flat>{{user.email}}</v-btn> 
+                <v-btn v-if="user" @click="logout" class="text-capitalize" flat>Logout</v-btn> 
             </v-toolbar-items> 
         </v-toolbar>
 
@@ -44,7 +45,7 @@ export default {
     data(){
         return {
             drawer: false,
-            authenticated: false,
+            user: null,
             links: [
                 {icon: 'home', text: 'Home', route: '/'},
                 {icon: 'wifi', text: 'Wifi Configuration Tool', route: '/Wifi'},
@@ -53,9 +54,23 @@ export default {
             ]
         }
     },
-    beforeMount() {
-      this.authenticated = !!firebase.auth().currentUser;  
+    created() {
+        firebase.auth().onAuthStateChanged(user => {
+            if(user){
+                this.user = user;
+            }
+            else{
+                this.user = null;
+            }
+        })
     },
+    methods: {
+        logout(){
+            firebase.auth().signOut().then(() => this.$router.push({
+                name: 'Login'
+            }))
+        }
+    }
 }
 </script>
 

@@ -11,6 +11,9 @@
                         <v-flex class="font-weight-bold subheading" error--text xs12>
                             {{feedback}}
                         </v-flex>
+                        <v-flex class="font-weight-bold subheading" error--text xs12>
+                            {{firebaseFeedback}}
+                        </v-flex>
                         <v-flex xs12>
                             <v-text-field
                                 name="firstName"
@@ -73,6 +76,9 @@
 
 <script>
     import db from '@/fb'
+    import firebase from 'firebase/app'
+    import 'firebase/firestore'
+    import validateEmailMixin from '@/mixins/validateEmailMixin'
 
     export default {
         data(){
@@ -83,6 +89,7 @@
                 email: '',
                 password1: '',
                 password2: '',
+                firebaseFeedback: '',
                 nameRules: [
                     v => v.length > 0 ? v.length < 50 || 'Name is too long.' : true
                 ],
@@ -100,25 +107,29 @@
         methods: {
             submit(){
                 if(this.$refs.form.validate()){  
-                    let ref = db.collection('users').doc(this.email);
+                    let dbReference = db.collection('users').doc(this.email);
 
-                    ref.get().then(doc => {
+                    dbReference.get().then(doc => {
                         if(doc.exists)
-                            this.feedback = 'This email already exists'                      
+                            this.feedback = 'This email already exists'
+                        else{
+                            firebase.auth().createUserWithEmailAndPassword(this.email, this.password1).then(cred => {
+                                dbReference.set({
+                                    userId: cred.user.uid,
+                                    email: cred.user.email,
+                                    firstName: this.firstName,
+                                    lastName: this.lastName
+                                })
+                            }).then(() => this.$router.push({name: 'home'}))
+                            .catch(error => {
+                                this.firebaseFeedback = error.message;
+                                this.feedback = '';   
+                            });
+                        }                      
                     });            
-                    //this.$router.push({ name: 'home' });
                 }
-            },
-            validateEmail(email) {
-                // eslint-disable-next-line
-                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                
-                return re.test(String(email).toLowerCase());
-            }
-        }
+            }            
+        },
+        mixins: [validateEmailMixin]
     }
 </script>
-
-<style scoped>
-
-</style>
