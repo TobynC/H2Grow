@@ -43,7 +43,8 @@ export default {
             wifiPassword: '',
             showErrorMessage: false,
             wifiRules: [
-                v => (v.length <= 50 || 'Length is too long.') && (v.length > 0 || 'Cannot be empty.')
+                v => v.length <= 50 || 'Length is too long.',
+                v => v.length > 0 || 'Cannot be empty.'
             ]
         }
     },

@@ -2,7 +2,7 @@
   <div>
     <v-layout row mb-5>
       <v-flex xs12>
-        <div class="display-2 font-weight-regular">Manual</div>
+        <div class="display-2 font-weight-regular success--text">Manual</div>
       </v-flex>
     </v-layout>    
 

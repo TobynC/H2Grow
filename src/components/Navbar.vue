@@ -15,9 +15,9 @@
             </v-toolbar-items>  
             <v-spacer></v-spacer> 
             <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn class="text-capitalize" flat>Login</v-btn> 
-                <v-btn class="text-capitalize" flat>Register</v-btn> 
-                <v-btn class="text-capitalize" flat>Account</v-btn> 
+                <v-btn to="/Login" class="text-capitalize" flat>Login</v-btn> 
+                <v-btn to="/Register" class="text-capitalize" flat>Register</v-btn> 
+                <v-btn v-if="authenticated" to="/Account" class="text-capitalize" flat>Account</v-btn> 
             </v-toolbar-items> 
         </v-toolbar>
 
@@ -37,18 +37,25 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
 export default {
     data(){
         return {
             drawer: false,
+            authenticated: false,
             links: [
                 {icon: 'home', text: 'Home', route: '/'},
-                {icon: 'wifi', text: 'Wifi Configuration Tool', route: '/wifi'},
-                {icon: 'opacity', text: 'Water Usage', route: '/water'},
-                {icon: 'help', text: 'Manual', route: '/manual'}
+                {icon: 'wifi', text: 'Wifi Configuration Tool', route: '/Wifi'},
+                {icon: 'opacity', text: 'Water Usage', route: '/Water'},
+                {icon: 'help', text: 'Manual', route: '/Manual'}
             ]
         }
-    }
+    },
+    beforeMount() {
+      this.authenticated = !!firebase.auth().currentUser;  
+    },
 }
 </script>
 
