@@ -2,7 +2,7 @@
     <v-layout row wrap>
         <v-flex xs4 offset-xs4 mt-5>
             <v-card>
-              <v-card-title class="display-1" primary-title>
+              <v-card-title class="display-1 success--text" primary-title>
                   Login
               </v-card-title>
               <v-card-text>
@@ -31,7 +31,7 @@
                                 :roles="passwordRules"
                             ></v-text-field>
                         </v-flex>
-                        <v-btn color="primary" @click="submit">Continue</v-btn>
+                        <v-btn color="success grey--text text--darken-4" @click="submit">Continue</v-btn>
                     </v-layout>
                 </v-form>
               </v-card-text>
@@ -43,7 +43,7 @@
 <script>
     import firebase from 'firebase/app'
     import 'firebase/firestore'
-    import validateEmailMixin from '@/mixins/validateEmailMixin.js'
+    import validateEmailMixin from '@/mixins/validateEmailMixin'
 
     export default {
         data(){

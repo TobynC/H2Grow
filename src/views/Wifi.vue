@@ -1,36 +1,47 @@
 <template>
   <v-layout row wrap>
-      <v-flex md6 xs12>
-        <v-form ref="form">
-            <v-text-field
-                name="wifiName"
-                label="Wifi Name"
-                id="wifiName"
-                v-model="wifiName"
-                required
-                prepend-icon="router"
-                type="text"
-                maxlength="50"
-                :rules="wifiRules"
-            ></v-text-field>
-            <v-text-field
-                name="wifiPassword"
-                label="Wifi Password"
-                id="wifiPassword"
-                prepend-icon="fingerprint"
-                v-model="wifiPassword"
-                type="password"
-                maxlength="50"
-                required
-                :rules="wifiRules"
-            ></v-text-field>
+      <v-flex xs4 offset-xs4 mt-5>
+            <v-card>
+              <v-card-title class="display-1 success--text" primary-title>
+                  Wifi Configuration Tool 
+              </v-card-title>
+              <v-card-text>
+                <v-form ref="form">
+                    <v-text-field
+                        name="wifiName"
+                        label="Wifi Name"
+                        id="wifiName"
+                        v-model="wifiName"
+                        prepend-icon="router"
+                        type="text"
+                        maxlength="50"
+                        :rules="wifiRules"
+                    ></v-text-field>
+                    <v-text-field
+                        name="wifiPassword"
+                        label="Wifi Password"
+                        id="wifiPassword"
+                        prepend-icon="lock"
+                        v-model="wifiPassword"
+                        type="password"
+                        maxlength="50"
+                        :rules="wifiRules"
+                    ></v-text-field>
 
-            <v-subheader v-if="showErrorMessage" class="error--text">There was a problem submitting the form.</v-subheader>
-            
-            <v-btn class="text-capitalize primary" @click="submit">submit</v-btn>
-            <v-btn class="text-capitalize" @click="clear">clear</v-btn>
-        </v-form>
-      </v-flex>
+                    <v-subheader v-if="showErrorMessage" class="error--text">There was a problem submitting the form.</v-subheader>
+                    
+                    <v-layout justify-space-between>
+                        <v-flex xs4>
+                            <v-btn class="text-capitalize success grey--text text--darken-4" @click="submit" block>download<v-icon right>save_alt</v-icon></v-btn>                    
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-btn class="text-capitalize" @click="clear" block outline>clear</v-btn>
+                        </v-flex>
+                    </v-layout>
+                </v-form>
+              </v-card-text>
+            </v-card>
+        </v-flex>
   </v-layout>
 </template>
 
@@ -42,9 +53,10 @@ export default {
             wifiName: '',
             wifiPassword: '',
             showErrorMessage: false,
+            submitted: false,
             wifiRules: [
-                v => v.length <= 50 || 'Length is too long.',
-                v => v.length > 0 || 'Cannot be empty.'
+                v => v.length > 0 ? v.length <= 50 || 'Password is too long.' : true,
+                v => !!v || 'Field is required',
             ]
         }
     },
@@ -76,6 +88,7 @@ export default {
             return conf;
         },
         saveFile(){
+            this.submitted = true;
             this.download(this.createConfFile(), "wpa_supplicant.conf", "conf")
         },
         download(data, filename, type) {

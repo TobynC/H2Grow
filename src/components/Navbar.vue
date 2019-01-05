@@ -3,7 +3,7 @@
         <v-toolbar dark app>
             <v-toolbar-side-icon class="hidden-md-and-up grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
             <router-link to="/" class="toolbar-title">
-                <v-toolbar-title class="headline">
+                <v-toolbar-title class="headline success--text">
                     <span>H<sub>2</sub>Grow</span>
                 </v-toolbar-title>
             </router-link>            
@@ -47,7 +47,7 @@ export default {
             drawer: false,
             user: null,
             links: [
-                {icon: 'home', text: 'Home', route: '/'},
+                {icon: 'dashboard', text: 'Dashboard', route: '/'},
                 {icon: 'wifi', text: 'Wifi Configuration Tool', route: '/Wifi'},
                 {icon: 'opacity', text: 'Water Usage', route: '/Water'},
                 {icon: 'help', text: 'Manual', route: '/Manual'}
@@ -67,7 +67,7 @@ export default {
     methods: {
         logout(){
             firebase.auth().signOut().then(() => this.$router.push({
-                name: 'Login'
+                name: 'login'
             }))
         }
     }

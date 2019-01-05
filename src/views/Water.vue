@@ -9,16 +9,23 @@
       <v-flex xs12>
         <water-graph/>  
       </v-flex>
-    </v-layout>
+    </v-layout> 
+    <v-layout row wrap>
+      <v-flex xs12>
+        <water-limit/>  
+      </v-flex>
+    </v-layout> 
   </div>
 </template>
 
 <script>
-  import WaterGraph from '@/components/WaterGraph.vue'
+  import WaterGraph from '@/components/WaterGraph'
+  import WaterLimit from '@/components/WaterLimit'
 
   export default {
     components: {
-        WaterGraph
+        WaterGraph,
+        WaterLimit
     }
   }
 </script>

@@ -20,25 +20,25 @@ const router = new Router({
       path: "/",
       name: "home",
       component: Home,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: true }
     },
     {
       path: "/Manual",
       name: "manual",
       component: Manual,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: true }
     },
     {
       path: "/Water",
       name: "water",
       component: Water,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: true }
     },
     {
       path: "/Wifi",
       name: "wifi",
       component: Wifi,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: true }
     },
     {
       path: "/Login",
@@ -54,7 +54,7 @@ const router = new Router({
       path: "/Account",
       name: "account",
       component: Account,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: true }
     }
   ]
 });
