@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap>
-        <v-flex xs4 offset-xs4 mt-5>
+        <v-flex sm8 offset-sm2 md4 offset-md4 mt-5>
             <v-card>
               <v-card-title class="display-1 success--text" primary-title>
                   Login
@@ -18,7 +18,7 @@
                                 id="email"
                                 type="email"                                
                                 v-model="email"
-                                :roles="emailRules"
+                                :rules="emailRules"
                             ></v-text-field>
                         </v-flex>
                         <v-flex xs12>
@@ -28,8 +28,9 @@
                                 id="password"
                                 type="password"
                                 v-model="password"
-                                :roles="passwordRules"
-                            ></v-text-field>
+                                :rules="passwordRules"
+                            ></v-text-field>                            
+                            <v-checkbox label="Show Password" v-model="showPassword" @change="showPasswordOnChange"></v-checkbox>
                         </v-flex>
                         <v-btn color="success grey--text text--darken-4" @click="submit">Continue</v-btn>
                     </v-layout>
@@ -51,6 +52,7 @@
                 email: '',
                 password: '',
                 firebaseFeedback: '',
+                showPassword: false,
                 passwordRules: [
                     v => v.length > 0 ? v.length < 50 || 'Password is too long.' : true
                 ],
@@ -68,6 +70,11 @@
                         this.firebaseFeedback = error.message;
                     })                   
                 }
+            },
+            showPasswordOnChange(){
+                const type = this.showPassword ? 'text' : 'password';
+                
+                document.getElementById('password').setAttribute('type', 'text')                
             }     
         },
         mixins: [validateEmailMixin]
