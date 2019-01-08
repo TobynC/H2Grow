@@ -1,12 +1,11 @@
 <template>
     <v-layout row wrap mb-5>
-        <v-flex xs2>
-            <v-switch :color="powerColor" left v-model="systemPower" @change="onSystemPowerChange">
+        <v-flex style="transform: scale(1.5) translateX(3.5rem) !important;" xs2>
+            <v-switch id="powerSwitch" :color="powerColor" left v-model="systemPower" @change="onSystemPowerChange">
                 <template slot="label">
                     <v-icon id="powerIcon" :color="powerColor" style="margin-right: 0.5rem;">power_settings_new</v-icon> System Power
                 </template>
-            </v-switch>
-            
+            </v-switch>           
 
             <v-alert
             :value="error"
