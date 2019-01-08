@@ -1,7 +1,13 @@
 <template>
     <v-layout row wrap mb-5>
         <v-flex xs2>
-            <v-switch color="success" class="red--text" left label="System Power" v-model="systemPower" @change="onSystemPowerChange"></v-switch>   
+            <v-switch :color="powerColor" left v-model="systemPower" @change="onSystemPowerChange">
+                <template slot="label">
+                    <v-icon id="powerIcon" :color="powerColor" style="margin-right: 0.5rem;">power_settings_new</v-icon> System Power
+                </template>
+            </v-switch>
+            
+
             <v-alert
             :value="error"
             type="error"
@@ -28,10 +34,14 @@ export default {
     created() {
         this.getSystemPower();
     },
+    computed: {
+      powerColor(){
+          return this.systemPower ? 'primary' : 'error';
+      }  
+    },
     methods: {
         saveSystemPower(){
         db.collection('systemPower').doc(firebase.auth().currentUser.email).set({systemPower: this.systemPower}).then(() =>{
-            //do nothing
         }).catch(error => {
             this.errorFeedback = error;
 

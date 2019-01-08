@@ -30,7 +30,7 @@
                                 v-model="password"
                                 :rules="passwordRules"
                             ></v-text-field>                            
-                            <v-checkbox label="Show Password" v-model="showPassword" @change="showPasswordOnChange"></v-checkbox>
+                            <v-checkbox color="success" label="Show Password" v-model="showPassword" @change="showPasswordOnChange"></v-checkbox>
                         </v-flex>
                         <v-btn color="success grey--text text--darken-4" @click="submit">Continue</v-btn>
                     </v-layout>
@@ -72,9 +72,7 @@
                 }
             },
             showPasswordOnChange(){
-                const type = this.showPassword ? 'text' : 'password';
-                
-                document.getElementById('password').setAttribute('type', 'text')                
+                document.getElementById('password').setAttribute('type', this.showPassword ? 'text' : 'password')                
             }     
         },
         mixins: [validateEmailMixin]

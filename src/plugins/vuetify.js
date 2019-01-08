@@ -4,7 +4,10 @@ import 'vuetify/src/stylus/app.styl'
 import {Laue} from 'laue'
 
 Vue.use(Vuetify, {
-  iconfont: 'md',
-})
+  iconfont: "md",
+  theme: {
+    primary: "#3fb1e3"
+  }
+});
 
 Vue.use(Laue)

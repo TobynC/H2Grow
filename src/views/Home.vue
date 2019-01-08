@@ -5,7 +5,7 @@
         <div class="display-2 font-weight-regular success--text">Dashboard</div>
       </v-flex>      
     </v-layout>  
-    <system-power/>  
+    <system-power/>
     <water-graph/>
     <schedule/>
     <sensors/>
@@ -27,3 +27,13 @@ export default {
   }  
 }
 </script>
+
+<style>
+.v-card.theme--dark{
+  margin: 3rem 0 3rem 0;
+}
+
+div.v-card__title.v-card__title--primary > div{
+    color: rgb(63, 177, 227);
+}
+</style>

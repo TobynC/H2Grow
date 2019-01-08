@@ -1,14 +1,6 @@
 <template>
-    <div>
-        <v-layout v-if="!waterData" justify-center>
-            <v-progress-circular
-            :size="50"
-            color="success"
-            indeterminate
-            ></v-progress-circular>
-        </v-layout> 
-
-        <v-layout v-if="waterData" row wrap>
+    <v-card>
+        <v-card-title v-if="waterData" primary-title>
             <v-flex v-if="waterData.length <= 0" mb-5>
                 <v-layout row wrap>
                     <v-flex headline xs12 mb-5>
@@ -23,64 +15,75 @@
             <v-flex v-if="totalWater && waterData.length > 0" display-1 xs12 mb-5>
                 {{ totalWater | round }} gallons of water used this year.
             </v-flex>
-            
-            <v-flex v-if="waterData.length > 0" xs12>
-                <v-layout row wrap>
-                    <v-flex md6 xs12>
-                        <la-polar :width="375" :data="pieChartData">
-                            <la-pie show-label label-prop="percentage" prop="water"></la-pie>
-                            <la-tooltip></la-tooltip>
-                        </la-polar>                                     
-                    </v-flex>
-                    <v-flex md6 xs12>
-                        <la-cartesian autoresize narrow :bound="[0]" :data="pieChartData">
-                            <la-bar prop="water"></la-bar>
-                            <la-x-axis prop="month"></la-x-axis>
-                            <la-y-axis></la-y-axis>
-                            <la-tooltip></la-tooltip>
-                        </la-cartesian>
-                    </v-flex>    
-                </v-layout>
-            </v-flex>
-                
-            <v-flex v-if="waterData.length > 0" xs12>
-                <v-layout row wrap>
-                    <v-flex md4 sm6 xs12 my-5>
-                        <v-layout row wrap>
-                            <v-flex xs12 display-1>                                    
-                                Monthly Usage
-                                <v-select
-                                :items="months"
-                                label="Months"
-                                v-model="monthSelection"
-                                @change="updateMonth"
-                                ></v-select>
-                            </v-flex>                        
-                            <v-flex mt-2 xs12>
-                                <p v-if="waterData.length<3" class="subheading font-weight-bold error--text">There are not enough data points for this month to display the graph.</p>
-                            </v-flex>
-                        </v-layout>
-                    </v-flex>    
-                
-                    <v-flex md8 sm12 xs12 my-5 v-if="monthSelection">
-                        <la-cartesian autoresize :bound="[0]" v-if="monthWaterData.length > 2" :data="monthWaterData">
-                            <defs>
-                                <linearGradient id="area-fill" x1="0" y1="0" x2="0" y2="1">
-                                    <stop stop-color="#0076b1" offset="0%" stop-opacity="0.4"></stop>
-                                    <stop stop-color="#0076b1" offset="50%" stop-opacity="0.2"></stop>
-                                    <stop stop-color="#0076b1" offset="100%" stop-opacity="0"></stop>
-                                </linearGradient>
-                            </defs>
-                            <la-area fill-color="url(#area-fill)" prop="water" dot curve></la-area>
-                            <la-y-axis></la-y-axis>
-                            <la-x-axis prop="month"></la-x-axis>
-                            <la-tooltip></la-tooltip>
-                        </la-cartesian>
-                    </v-flex>
-                </v-layout>   
-            </v-flex>    
-        </v-layout>
-    </div>
+        </v-card-title>
+        <v-card-text>
+            <v-layout v-if="!waterData" justify-center>
+                <v-progress-circular
+                :size="50"
+                color="success"
+                indeterminate
+                ></v-progress-circular>
+            </v-layout> 
+
+            <v-layout v-if="waterData" row wrap>          
+                <v-flex v-if="waterData.length > 0" xs12>
+                    <v-layout row wrap>
+                        <v-flex md6 xs12>
+                            <la-polar :width="375" :data="pieChartData">
+                                <la-pie show-label label-prop="percentage" prop="water"></la-pie>
+                                <la-tooltip></la-tooltip>
+                            </la-polar>                                     
+                        </v-flex>
+                        <v-flex md6 xs12>
+                            <la-cartesian autoresize narrow :bound="[0]" :data="pieChartData">
+                                <la-bar prop="water"></la-bar>
+                                <la-x-axis prop="month"></la-x-axis>
+                                <la-y-axis></la-y-axis>
+                                <la-tooltip></la-tooltip>
+                            </la-cartesian>
+                        </v-flex>    
+                    </v-layout>
+                </v-flex>
+                    
+                <v-flex v-if="waterData.length > 0" xs12>
+                    <v-layout row wrap>
+                        <v-flex md4 sm6 xs12 my-5>
+                            <v-layout row wrap>
+                                <v-flex xs12 display-1>                                    
+                                    Monthly Usage
+                                    <v-select
+                                    :items="months"
+                                    label="Months"
+                                    v-model="monthSelection"
+                                    @change="updateMonth"
+                                    ></v-select>
+                                </v-flex>                        
+                                <v-flex mt-2 xs12>
+                                    <p v-if="waterData.length<3" class="subheading font-weight-bold error--text">There are not enough data points for this month to display the graph.</p>
+                                </v-flex>
+                            </v-layout>
+                        </v-flex>    
+                    
+                        <v-flex md8 sm12 xs12 my-5 v-if="monthSelection">
+                            <la-cartesian autoresize :bound="[0]" v-if="monthWaterData.length > 2" :data="monthWaterData">
+                                <defs>
+                                    <linearGradient id="area-fill" x1="0" y1="0" x2="0" y2="1">
+                                        <stop stop-color="#0076b1" offset="0%" stop-opacity="0.4"></stop>
+                                        <stop stop-color="#0076b1" offset="50%" stop-opacity="0.2"></stop>
+                                        <stop stop-color="#0076b1" offset="100%" stop-opacity="0"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <la-area fill-color="url(#area-fill)" prop="water" dot curve></la-area>
+                                <la-y-axis></la-y-axis>
+                                <la-x-axis prop="month"></la-x-axis>
+                                <la-tooltip></la-tooltip>
+                            </la-cartesian>
+                        </v-flex>
+                    </v-layout>   
+                </v-flex>    
+            </v-layout>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>

@@ -1,53 +1,55 @@
 <template>
-    <div>
-        <v-layout v-if="moisture === null" justify-center>
-            <v-progress-circular
-            :size="50"
-            color="success"
-            indeterminate
-            ></v-progress-circular>
-        </v-layout> 
-
-        <v-layout mt-5 row wrap>
-            <v-flex xs12>
-                <v-card>
-                    <v-card-title primary-title>
-                        Moisture Sensor Sensitivity
-                    </v-card-title>
-                    <v-card-text>
-                        <v-layout row wrap>
-                            <v-flex xs12>
-                                <v-slider
-                                v-model="moisture"
-                                :thumb-size="24"
-                                max="100"
-                                min="0"
-                                thumb-label="always"
-                                ></v-slider>
-                            </v-flex>
-                            <v-flex xs12 mt-2>
-                                <v-btn @click="saveSensorData" color="success grey--text text--darken-4">Save Sensor Settings</v-btn>
-                                <v-alert
-                                :value="success"
-                                type="success"
-                                transition="scale-transition"
-                                >
-                                Sensor settings successfully saved.
-                                </v-alert>            
-                                <v-alert
-                                :value="error"
-                                type="error"
-                                transition="scale-transition"
-                                >
-                                Sensor settings did not save correctly.
-                                </v-alert>            
-                            </v-flex>
-                        </v-layout>
-                    </v-card-text>
-                </v-card>
+    <v-card>
+        <v-card-title primary-title>
+            <v-flex display-1 xs12 mb-5>
+            Moisture Sensor Sensitivity
             </v-flex>
-        </v-layout>
-    </div>
+        </v-card-title>
+        <v-card-text>
+            <v-layout v-if="moisture === null" justify-center>
+                <v-progress-circular
+                :size="50"
+                color="success"
+                indeterminate
+                ></v-progress-circular>
+            </v-layout> 
+
+            <v-layout mt-5 row wrap>
+                <v-flex xs12>
+                    <v-layout row wrap>
+                        <v-flex xs12>
+                            <v-slider
+                            v-model="moisture"
+                            :thumb-size="24"
+                            max="100"
+                            min="0"
+                            light
+                            thumb-label="always"
+                            thumb-color="primary"
+                            ></v-slider>
+                        </v-flex>
+                        <v-flex xs12 mt-2>
+                            <v-btn @click="saveSensorData" color="success grey--text text--darken-4">Save Sensor Settings</v-btn>
+                            <v-alert
+                            :value="success"
+                            type="success"
+                            transition="scale-transition"
+                            >
+                            Sensor settings successfully saved.
+                            </v-alert>            
+                            <v-alert
+                            :value="error"
+                            type="error"
+                            transition="scale-transition"
+                            >
+                            Sensor settings did not save correctly.
+                            </v-alert>            
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+            </v-layout>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -98,3 +100,10 @@ export default {
     }
 }
 </script>
+
+<style scope>
+.v-slider__thumb-label > span{
+    color: black;
+    font-weight: 800;
+}
+</style>
