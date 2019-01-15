@@ -29,7 +29,7 @@
                 <v-flex v-if="waterData.length > 0" xs12>
                     <v-layout row wrap>
                         <v-flex md6 xs12>
-                            <la-polar :width="375" :data="pieChartData">
+                            <la-polar id="pie" :width="375" :data="pieChartData">
                                 <la-pie show-label label-prop="percentage" prop="water"></la-pie>
                                 <la-tooltip></la-tooltip>
                             </la-polar>                                     
@@ -73,8 +73,8 @@
                                         <stop stop-color="#0076b1" offset="100%" stop-opacity="0"></stop>
                                     </linearGradient>
                                 </defs>
-                                <la-area fill-color="url(#area-fill)" prop="water" dot curve></la-area>
-                                <la-y-axis></la-y-axis>
+                                <la-area :continued="false" fill-color="url(#area-fill)" prop="water" dot curve></la-area>
+                                <la-y-axis :interval="4" :format="v => Math.round(v)"></la-y-axis>
                                 <la-x-axis prop="month"></la-x-axis>
                                 <la-tooltip></la-tooltip>
                             </la-cartesian>
@@ -93,21 +93,21 @@ import 'firebase/auth'
 
 export default {
     data(){
-        return {
+        return {            
             waterData: null,
             months: [
-                'January',
-                'February',
-                'March',
-                'April',
+                'Jan.',
+                'Feb.',
+                'Mar.',
+                'Apr.',
                 'May',
                 'June',
                 'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
+                'Aug.',
+                'Sept.',
+                'Oct.',
+                'Nov.',
+                'Dec.'
             ],
             monthSelection: null,
             monthWaterData: null,
@@ -130,11 +130,17 @@ export default {
         },
         updateMonth(){
             const numericMonthValue = this.months.findIndex(month => month === this.monthSelection) + 1;
-            const temp = this.waterData;
-
-            this.monthWaterData = temp.filter(
-                data => numericMonthValue == parseInt(data.month.substring(0, data.month.indexOf('/')))
+            let temp = this.waterData;
+            
+            temp = temp.filter(
+                data => numericMonthValue == parseInt(data.month.substring(0, data.month.indexOf('/')))                
             );
+                        
+            for(const d of temp){
+                d.month = d.month.split('/')[1];    
+            }
+            
+            this.monthWaterData = temp;
         },
         populatePieChartData(){
             const compiledData = [];
@@ -156,7 +162,7 @@ export default {
                 }
             }   
 
-            this.pieChartData = compiledData;
+            this.pieChartData = compiledData;           
         },
         getTotalWaterUsage(){            
             for(const data of this.pieChartData)
@@ -168,7 +174,7 @@ export default {
         }
     },
     created() {
-        this.populateWaterData();
+        this.populateWaterData();        
     }
 }
 </script>
@@ -182,4 +188,7 @@ text{
 		-1px 1px 0 #000,
 		1px 1px 0 #000;
 }
+/* text:nth-of-type(12){
+    transform: translateX(-2.1rem);  
+} */
 </style>

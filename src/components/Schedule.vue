@@ -40,7 +40,7 @@
                                     ></v-checkbox>
                                 </v-flex>
                                 <v-divider></v-divider>
-                                <v-layout justify-space-around>
+                                <v-layout wrap justify-space-around>
                                     <v-card v-if="obj.active && !obj.allDay" md6 xs12>
                                         <v-card-title class="justify-center" primary-title>
                                             <div class="headline success--text">Start Time</div>

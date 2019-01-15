@@ -43,7 +43,9 @@
                                 id="email"
                                 type="email"
                                 v-model="email"
-                                :rules="emailRules"
+                                :rules="[
+                                v => v.length > 0 ? this.validateEmail(v) || 'Invalid email.' : true
+                                ]"
                             ></v-text-field>
                         </v-flex>
                         <v-flex xs12>

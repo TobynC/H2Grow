@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-      <v-flex xs4 offset-xs4 mt-5>
+      <v-flex sm8 offset-sm2 md4 offset-md4 mt-5>
             <v-card>
               <v-card-title class="display-1 success--text" primary-title>
                   Wifi Configuration Tool 
