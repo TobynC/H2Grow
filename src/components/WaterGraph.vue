@@ -171,7 +171,19 @@ export default {
         createPercentageAttribute(){
             for(const data of this.pieChartData)
                 data.percentage = `${data.month} (${parseInt((data.water/this.totalWater)*100)}%)`
-        }
+        },
+        // copyData(copyFromEmail, copyToEmail){
+        //     db.collection('sensors').doc(copyFromEmail).get().then(data => {
+        //         db.collection('sensors').doc(copyToEmail).set(data.data()).then(() => {
+        //             console.log('success')
+        //         });
+        //     });
+        //     db.collection('schedule').doc(copyFromEmail).get().then(data => {
+        //         db.collection('schedule').doc(copyToEmail).set(data.data()).then(() => {
+        //             console.log('success')
+        //         });
+        //     });
+        // }
     },
     created() {
         this.populateWaterData();        

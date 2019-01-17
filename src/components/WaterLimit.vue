@@ -2,7 +2,7 @@
     <v-form ref="form">
         <v-layout row wrap>
             <v-flex display-1 xs12 mb-5>
-                Limit water usage
+                Limit monthly water usage
             </v-flex>
             <v-flex xs12>
                 <v-switch label="Enable Water Cap" color="success" v-model="waterCapEnabled"></v-switch>
