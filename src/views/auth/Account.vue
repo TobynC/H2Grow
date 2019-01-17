@@ -1,30 +1,30 @@
 <template>
     <v-layout row wrap>
         <v-flex md4 offset-md4 xs8 offset-xs2 mt-5>
-            <v-card>
+            <v-card v-if="user">
               <v-card-title class="display-1 success--text" primary-title>
                   Account Overview
               </v-card-title>
               <v-card-text v-if="user">
                 <v-layout row wrap mb-3>
-                    <v-flex xs11>
-                        <div class="subheading font-weight-bold">Email:</div> {{user.email}}
+                    <v-flex xs10>
+                        <div class="headline font-weight-bold success--text text--lighten-1">Email:</div> <div class="subheading">{{user.email}}</div>
                     </v-flex>
-                    <v-flex xs1>
-                        <v-btn flat icon>
+                    <!-- <v-flex xs2>
+                        <v-btn @click="editEmail" flat icon>
                             <v-icon class="primary--text">edit</v-icon>
                         </v-btn>
-                    </v-flex>
+                    </v-flex> -->
                 </v-layout>
                 <v-layout row wrap>
-                    <v-flex xs11>
-                        <div class="subheading font-weight-bold">Name:</div> {{ fullName }}
+                    <v-flex xs10>
+                        <div class="headline font-weight-bold success--text text--lighten-1">Name:</div> <div class="subheading">{{ fullName }}</div>
                     </v-flex>
-                    <v-flex xs1>
-                        <v-btn flat icon>
+                    <!-- <v-flex xs2>
+                        <v-btn @click="editName" flat icon>
                             <v-icon class="primary--text">edit</v-icon>
                         </v-btn>
-                    </v-flex>
+                    </v-flex> -->
                 </v-layout>
               </v-card-text>
             </v-card>
@@ -41,6 +41,14 @@
         data(){
             return{
                 user: null
+            }
+        },
+        methods: {
+            editEmail() {
+
+            },
+            editName() {
+
             }
         },
         created() {

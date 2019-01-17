@@ -19,6 +19,7 @@
                                 type="email"                                
                                 v-model="email"
                                 :rules="emailRules"
+                                @keyup.enter="submit"
                             ></v-text-field>
                         </v-flex>
                         <v-flex xs12>
@@ -29,6 +30,7 @@
                                 type="password"
                                 v-model="password"
                                 :rules="passwordRules"
+                                @keyup.enter="submit"
                             ></v-text-field>                            
                             <v-checkbox color="success" label="Show Password" v-model="showPassword" @change="showPasswordOnChange"></v-checkbox>
                         </v-flex>

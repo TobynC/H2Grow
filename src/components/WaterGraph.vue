@@ -73,10 +73,11 @@
                                         <stop stop-color="#0076b1" offset="100%" stop-opacity="0"></stop>
                                     </linearGradient>
                                 </defs>
-                                <la-area :continued="false" fill-color="url(#area-fill)" prop="water" dot curve></la-area>
+                                <la-area label="gallons" :continued="false" fill-color="url(#area-fill)" prop="water" dot curve></la-area>
                                 <la-y-axis :interval="4" :format="v => Math.round(v)"></la-y-axis>
-                                <la-x-axis prop="month"></la-x-axis>
+                                <la-x-axis label="days of the month" prop="month"></la-x-axis>
                                 <la-tooltip></la-tooltip>
+                                <la-legend selectable></la-legend>
                             </la-cartesian>
                         </v-flex>
                     </v-layout>   
