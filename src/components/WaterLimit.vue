@@ -40,6 +40,7 @@
 import db from '@/fb'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import toastMixin from '@/mixins/toastMixin'
 
 export default {
     data(){
@@ -73,20 +74,13 @@ export default {
                         waterCapEnabled: this.waterCapEnabled, 
                         waterCap: this.waterCap
                 }}).then(() => {
-                    this.success = true;
-
-                    setTimeout(() => {
-                        this.success = false;
-                    }, 2000);
+                    this.toast(this, 'success', 2000);
                 }).catch(() => {
-                    this.error = true;
-
-                    setTimeout(() => {
-                        this.error = false;
-                    }, 2000);
+                    this.toast(this, 'error', 2000);
                 })
             }
         }
-    },
+    },    
+    mixins: [toastMixin]
 }
 </script>

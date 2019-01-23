@@ -22,6 +22,8 @@
 import db from '@/fb'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import toastMixin from '@/mixins/toastMixin'
+
 export default {
     data(){
         return {
@@ -43,11 +45,7 @@ export default {
         db.collection('systemPower').doc(firebase.auth().currentUser.email).set({systemPower: this.systemPower}).then(() =>{
         }).catch(error => {
             this.errorFeedback = error;
-
-            this.error = true;
-            setTimeout(() => {
-                this.error = false;
-            }, 4000);
+            this.toast(this, 'error', 4000);
         });
     },
     getSystemPower(){
@@ -60,6 +58,7 @@ export default {
     onSystemPowerChange(){
         this.saveSystemPower();
     }
-  } 
+  },
+  mixins: [toastMixin] 
 }
 </script>

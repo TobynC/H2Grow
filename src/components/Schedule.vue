@@ -89,6 +89,7 @@
 import db from '@/fb'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import toastMixin from '@/mixins/toastMixin'
 
 export default {
     data(){
@@ -120,17 +121,10 @@ export default {
         saveSchedule(){
             db.collection('schedule').doc(this.currentUser.email).set({schedule: this.schedule, allWeek: this.allWeek}).then(() => {
                 this.success = true;
-
-                setTimeout(() => {
-                    this.success = false;
-                }, 4000);
+                this.toast(this, 'success', 4000);
             }).catch(error => {
                 this.errorFeedback = error;
-
-                this.error = true;
-                setTimeout(() => {
-                    this.error = false;
-                }, 4000);
+                this.toast(this, 'error', 4000);
             });            
         },
         allWeekOnChange(){
@@ -149,7 +143,8 @@ export default {
             ];
             this.allWeek = false;  
         }
-    }
+    },
+    mixins: [toastMixin]
 }
 </script>
 
