@@ -8,7 +8,7 @@ import 'firebase/auth'
 Vue.config.productionTip = false
 
 Vue.filter('round', function(value){
-  if(!value || typeof value != 'number') return ''
+  if(!value || typeof value != 'number') return '';
   return Math.round(value * 10)/10;
 })
 
