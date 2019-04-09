@@ -54,7 +54,7 @@
                                             <div class="headline success--text">Stop Time</div>
                                         </v-card-title>
                                         <v-card-text>                                      
-                                            <v-time-picker :value="obj.start" v-model="obj.stop" :min="obj.start" color="green lighten-1"></v-time-picker>
+                                            <v-time-picker v-model="obj.stop" :min="obj.start" color="green lighten-1"></v-time-picker>
                                         </v-card-text>
                                     </v-card> 
                                 </v-layout>                        
