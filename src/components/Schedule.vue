@@ -54,7 +54,7 @@
                                             <div class="headline success--text">Stop Time</div>
                                         </v-card-title>
                                         <v-card-text>                                      
-                                            <v-time-picker v-model="obj.stop" :min="obj.start" color="green lighten-1"></v-time-picker>
+                                            <v-time-picker :value="obj.start" v-model="obj.stop" :min="obj.start" color="green lighten-1"></v-time-picker>
                                         </v-card-text>
                                     </v-card> 
                                 </v-layout>                        
@@ -79,6 +79,13 @@
                     >
                     Schedule did not save correctly.
                     </v-alert>            
+                    <v-alert
+                    :value="error2"
+                    type="error"
+                    transition="scale-transition"
+                    >
+                    Must set end time if you have a start time.
+                    </v-alert>            
                 </v-flex>
             </v-layout>
         </v-card-text>
@@ -98,6 +105,7 @@ export default {
             allWeek: false,
             success: false,
             error: false,
+            error2: false,
             errorFeedback: '',
             currentUser: null
         }
@@ -119,6 +127,7 @@ export default {
             });
         },
         saveSchedule(){
+            if(!this.validScheduleEndTimes()) return;
             db.collection('schedule').doc(this.currentUser.email).set({schedule: this.schedule, allWeek: this.allWeek}).then(() => {
                 this.success = true;
                 this.toast(this, 'success', 4000);
@@ -142,6 +151,15 @@ export default {
                 { day: 'Sunday', active: false, allDay: true, start: null, stop: null }
             ];
             this.allWeek = false;  
+        },
+        validScheduleEndTimes(){
+            for(let dayI of this.schedule){
+                if(dayI.active && !dayI.allDay && dayI.start && dayI.stop === null){                    
+                    this.toast(this, 'error2', 4000);
+                    return false;                    
+                }
+            }
+            return true;
         }
     },
     mixins: [toastMixin]
